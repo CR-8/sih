@@ -49,10 +49,7 @@ function Chat({ initialMessage, onBack }: ChatProps) {
   const [isCollectingData, setIsCollectingData] = useState(false);
   const [recommendation, setRecommendation] = useState<string>('');
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-  const [showDoneButton, setShowDoneButton] = useState(false);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [otherInput, setOtherInput] = useState<string>('');
-  const [showOtherInput, setShowOtherInput] = useState(false);
   const [questionnaireSelections, setQuestionnaireSelections] = useState<Record<string, string[]>>({});
   const [questionnaireOtherInputs, setQuestionnaireOtherInputs] = useState<Record<string, string>>({});
   const [questionAnswers, setQuestionAnswers] = useState<QuestionAnswer[]>([]);
@@ -163,7 +160,6 @@ function Chat({ initialMessage, onBack }: ChatProps) {
 
   // Function to get recommendation from AI model
   const getRecommendation = useCallback(async () => {
-    setIsAnalyzing(true);
 
     // Add analyzing message
     const analyzingMessage: Message = {
@@ -217,7 +213,6 @@ function Chat({ initialMessage, onBack }: ChatProps) {
       setMessages(prev => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
-      setIsAnalyzing(false);
     }
   }, [questionAnswers]);
 
@@ -237,11 +232,8 @@ function Chat({ initialMessage, onBack }: ChatProps) {
       // Reset selections for new question
       setSelectedOptions([]);
       setOtherInput('');
-      setShowOtherInput(false);
-      setShowDoneButton(true); // Show done button
     } else {
       // All questions answered, get recommendation
-      setShowDoneButton(false); // Hide done button
       getRecommendation();
     }
   }, [currentQuestion, questions, getRecommendation]);
@@ -310,11 +302,9 @@ function Chat({ initialMessage, onBack }: ChatProps) {
     // Reset selections and other input for next question
     setSelectedOptions([]);
     setOtherInput('');
-    setShowOtherInput(false);
 
     // Move to next question
     setCurrentQuestion(prev => prev + 1);
-    setShowDoneButton(false);
 
     // Ask next question after a short delay
     setTimeout(() => {
@@ -554,8 +544,8 @@ function Chat({ initialMessage, onBack }: ChatProps) {
                 <div className="flex items-center justify-center h-full">
                   <div className="text-center text-white/60">
                     <div className="text-6xl mb-4">�</div>
-                    <p className="text-lg mb-2">Hello! I'm Ada, your design assistant.</p>
-                    <p className="text-sm">Describe your project idea, and I'll help bring it to life.</p>
+                    <p className="text-lg mb-2">Hello! I&apos;m Ada, your design assistant.</p>
+                    <p className="text-sm">Describe your project idea, and I&apos;ll help bring it to life.</p>
                   </div>
                 </div>
               ) : (
@@ -815,7 +805,7 @@ function Chat({ initialMessage, onBack }: ChatProps) {
               className="bg-neutral-800 rounded-3xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto hide-scrollbar"
             >
               <div className="text-white mb-6">
-                <h2 className="text-2xl font-bold text-center mb-2">Let's Customize Your Design</h2>
+                <h2 className="text-2xl font-bold text-center mb-2">Let&apos;s Customize Your Design</h2>
                 <p className="text-white/70 text-center">Answer these questions to help me create the perfect design for you.</p>
               </div>
 

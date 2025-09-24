@@ -4,13 +4,12 @@ import { useState } from "react";
 import { useRouter } from 'next/navigation';
 import    { PromptInputBox } from "@/components/ui/ai-prompt-box";
 import { motion } from 'framer-motion';
-import Chat from "@/components/Chat";
 
 export default function HomePage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const handleSendMessage = async (message: string, files?: File[]) => {
+  const handleSendMessage = async (message: string) => {
     if (!message.trim()) return;
 
     setIsLoading(true);

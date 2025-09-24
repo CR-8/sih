@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 interface GeminiChatRequest {
   prompt: string;
-  conversationHistory?: any[];
+  conversationHistory?: Record<string, unknown>[];
 }
 
 interface DesignRecommendationRequest {
@@ -127,7 +127,7 @@ async function handleGeminiChat(body: GeminiChatRequest) {
 }
 
 async function handleDesignRecommendation(body: DesignRecommendationRequest) {
-  const { message, project_type, audience, color_pref, layout_pref, award_winner } = body;
+  const { project_type, audience, color_pref, layout_pref, award_winner } = body;
   
   try {
     // Call Python AI model

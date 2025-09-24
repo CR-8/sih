@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { imageUrl, designType } = body;
+    const { designType } = body;
 
     // Placeholder implementation for design analysis
     // In a real implementation, this would analyze the uploaded design/image

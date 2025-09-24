@@ -107,7 +107,6 @@ export class MarkdownSanitizer {
   private formatHeaders(content: string): string {
     // Ensure headers have proper spacing
     content = content.replace(/^(#{1,6})\s*(.+)$/gm, (match, hashes, text) => {
-      const level = hashes.length;
       const cleanText = text.trim();
       return `${hashes} ${cleanText}`;
     });
@@ -367,9 +366,6 @@ export class MarkdownSanitizer {
    */
   private sanitizeHtml(html: string): string {
     // Allow only safe HTML tags
-    const allowedTags = ['p', 'br', 'strong', 'em', 'code', 'pre', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'a'];
-    const allowedAttributes = ['href', 'target', 'rel', 'class'];
-    
     // Remove disallowed tags
     html = html.replace(/<(?!\/?(?:${allowedTags.join('|')})\b)[^>]*>/gi, '');
     
@@ -412,7 +408,7 @@ export function markdownToPlainText(content: string): string {
  */
 export function formatConversationMessage(content: string): string {
   // First, escape any HTML content to prevent XSS
-  let sanitized = content.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const sanitized = content.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
   // Convert markdown to readable text
   let readable = sanitized;
@@ -454,7 +450,6 @@ export function extractMarkdownSections(content: string): Record<string, string>
   let match;
   
   while ((match = headerRegex.exec(content)) !== null) {
-    const level = match[1].length;
     const title = match[2].trim();
     const key = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
     

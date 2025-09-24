@@ -412,7 +412,7 @@ Now I'll generate your personalized design roadmap, color palette, and typograph
         default:
           return cleaned;
       }
-    } catch (error) {
+    } catch {
       return response; // Return original if parsing fails
     }
   }
@@ -453,7 +453,7 @@ Now I'll generate your personalized design roadmap, color palette, and typograph
         updated.deviceTargets = Array.isArray(value) ? value : [String(value)];
         break;
       default:
-        (updated as any)[field] = value;
+        (updated as Record<string, unknown>)[field] = value;
     }
     
     return updated;
@@ -469,7 +469,7 @@ Now I'll generate your personalized design roadmap, color palette, and typograph
     ];
     
     const completedFields = fields.filter(field => {
-      const value = (requirements as any)[field];
+      const value = (requirements as Record<string, unknown>)[field];
       return value && (Array.isArray(value) ? value.length > 0 : true);
     });
     
@@ -479,7 +479,7 @@ Now I'll generate your personalized design roadmap, color palette, and typograph
   /**
    * Generate design specifications from requirements
    */
-  async generateDesignSpecs(requirements: DesignRequirements): Promise<Record<string, any>> {
+  async generateDesignSpecs(requirements: DesignRequirements): Promise<Record<string, unknown>> {
     // First, get AI-powered recommendation from the ML model
     let aiRecommendation = '';
     try {
@@ -516,7 +516,7 @@ Format as structured JSON with clear categories and explanations.
   /**
    * Fallback design specifications
    */
-  private generateFallbackSpecs(): Record<string, any> {
+  private generateFallbackSpecs(): Record<string, unknown> {
     return {
       colorPalette: {
         primary: "#2563eb",
