@@ -58,6 +58,24 @@ function Chat({ initialMessage, onBack }: ChatProps) {
   const [chatMode, setChatMode] = useState<ChatMode>('chat');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Function to restart the analysis system
+  const restartAnalysis = useCallback(() => {
+    setMessages([]);
+    setCurrentQuestion(0);
+    setIsCollectingData(false);
+    setDesignData({});
+    setRecommendation('');
+    setSelectedOptions([]);
+    setOtherInput('');
+    setQuestionnaireSelections({});
+    setQuestionnaireOtherInputs({});
+    setQuestionAnswers([]);
+    setShowQuestionnaire(false);
+    setShowAnalyzingAnimation(false);
+    setChatMode('chat');
+    hasProcessedInitialMessage.current = false;
+  }, []);
+
   // Helper functions to generate design recommendations
   const generateColorPalette = (colorPref: string) => {
     const palettes: Record<string, { colors: string[], name: string }> = {
@@ -501,15 +519,15 @@ function Chat({ initialMessage, onBack }: ChatProps) {
   }, [messages]);
 
   return (
-    <div className="flex w-full h-screen p-4 justify-evenly items-center bg-[radial-gradient(125%_125%_at_50%_101%,rgba(245,87,2,1)_10.5%,rgba(245,120,2,1)_16%,rgba(245,140,2,1)_17.5%,rgba(245,170,100,1)_25%,rgba(238,174,202,1)_40%,rgba(202,179,214,1)_65%,rgba(148,201,233,1)_100%)]">
-      <div className="w-screen h-[96vh] rounded-3xl p-6 flex items-center justify-center gap-4 m-2 bg-black">
-        <div className="w-2/3 flex flex-col h-[90vh] bg-neutral-800 rounded-4xl">
+    <div className="flex w-full min-h-screen p-2 sm:p-4 justify-center items-center bg-[radial-gradient(125%_125%_at_50%_101%,rgba(245,87,2,1)_10.5%,rgba(245,120,2,1)_16%,rgba(245,140,2,1)_17.5%,rgba(245,170,100,1)_25%,rgba(238,174,202,1)_40%,rgba(202,179,214,1)_65%,rgba(148,201,233,1)_100%)]">
+      <div className="w-full max-w-7xl h-[98vh] sm:h-[96vh] rounded-2xl sm:rounded-3xl p-3 sm:p-6 flex items-center justify-center gap-2 sm:gap-4 m-1 sm:m-2 bg-black">
+        <div className="w-full max-w-4xl flex flex-col h-full bg-neutral-800 rounded-2xl sm:rounded-4xl">
           {/* Messages Area */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="flex-1 backdrop-blur-md rounded-lg p-6 m-4 overflow-hidden flex flex-col"
+            className="flex-1 backdrop-blur-md rounded-lg p-3 sm:p-6 m-2 sm:m-4 overflow-hidden flex flex-col"
           >
             <div className="flex-1 overflow-y-auto space-y-4 hide-scrollbar" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               <style jsx>{`
@@ -522,16 +540,28 @@ function Chat({ initialMessage, onBack }: ChatProps) {
                 }
               `}</style>
               {/* Back button */}
-              <div className="flex items-center justify-between mb-4">
-                <button onClick={onBack} className="text-white/70 hover:text-white flex items-center space-x-2">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
-                  <span>Back</span>
-                </button>
-                <div className="text-white font-semibold flex items-center space-x-2">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2 sm:gap-0">
+                <div className="flex items-center space-x-4">
+                  <button onClick={onBack} className="text-white/70 hover:text-white flex items-center space-x-2 text-sm sm:text-base">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                    <span>Back</span>
+                  </button>
+                  <button 
+                    onClick={restartAnalysis} 
+                    className="text-white/70 hover:text-white flex items-center space-x-2 text-sm sm:text-base"
+                    title="Restart Analysis"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    <span>Restart</span>
+                  </button>
+                </div>
+                <div className="text-white font-semibold flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-2 text-sm sm:text-base">
                   <span>Chat with Ada</span>
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium self-start sm:self-auto ${
                     chatMode === 'chat' 
                       ? 'bg-blue-500/20 text-blue-300' 
                       : 'bg-orange-500/20 text-orange-300'
@@ -541,11 +571,11 @@ function Chat({ initialMessage, onBack }: ChatProps) {
                 </div>
               </div>
               {messages.length === 0 && !initialMessage ? (
-                <div className="flex items-center justify-center h-full">
-                  <div className="text-center text-white/60">
-                    <div className="text-6xl mb-4">�</div>
-                    <p className="text-lg mb-2">Hello! I&apos;m Ada, your design assistant.</p>
-                    <p className="text-sm">Describe your project idea, and I&apos;ll help bring it to life.</p>
+                <div className="flex items-center justify-center h-full px-4">
+                  <div className="text-center text-white/60 max-w-md">
+                    <div className="text-4xl sm:text-6xl mb-4">🤖</div>
+                    <p className="text-base sm:text-lg mb-2">Hello! I&apos;m Ada, your design assistant.</p>
+                    <p className="text-xs sm:text-sm">Describe your project idea, and I&apos;ll help bring it to life.</p>
                   </div>
                 </div>
               ) : (
@@ -642,13 +672,13 @@ function Chat({ initialMessage, onBack }: ChatProps) {
             />
           </motion.div>
         </div>
-        <div className="w-1/3 flex flex-col h-[90vh] bg-neutral-800 rounded-4xl">
+        <div className="hidden lg:flex lg:w-1/3 flex-col h-[90vh] bg-neutral-800 rounded-4xl ml-4">
           {/* Results Area */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="flex-1 backdrop-blur-md rounded-lg p-6 m-4 overflow-hidden flex flex-col"
+            className="flex-1 backdrop-blur-md rounded-lg p-3 sm:p-6 m-2 sm:m-4 overflow-hidden flex flex-col"
           >
             <div className="text-white mb-4">
               <h3 className="text-lg font-bold text-center">Design Results</h3>
