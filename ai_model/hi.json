@@ -1,0 +1,144 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Design Knowledge Specification",
+  "type": "object",
+  "properties": {
+    "project_metadata": {
+      "type": "object",
+      "properties": {
+        "project_name": { "type": "string" },
+        "business_type": { "type": "string", "enum": ["saas", "ecommerce", "portfolio", "blog", "agency", "dashboard", "landing-page", "nonprofit", "educational", "other"] },
+        "target_audience": { "type": "string" },
+        "goals": { "type": "string" }
+      },
+      "required": ["project_name", "business_type"]
+    },
+
+    "layout": {
+      "type": "string",
+      "enum": ["single-page", "multi-section", "landing-page", "dashboard", "portfolio", "ecommerce"]
+    },
+    "grid_system": {
+      "type": "string",
+      "enum": ["12-column", "16-column", "asymmetrical", "freeform"]
+    },
+    "sections": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "hero_style": {
+      "type": "string",
+      "enum": ["minimal", "bold-typography", "illustration", "photographic", "video-background", "split-screen", "gradient-overlay"]
+    },
+
+    "typography": {
+      "type": "object",
+      "properties": {
+        "primary_font": { "type": "string" },
+        "secondary_font": { "type": "string" },
+        "font_scale": { "type": "string", "enum": ["classic (1.2x)", "modern (1.25x)", "fluid-responsive", "golden-ratio"] },
+        "hierarchy_score": { "type": "string", "enum": ["weak", "moderate", "strong"] },
+        "line_height": { "type": "string", "enum": ["tight", "normal", "loose"] }
+      },
+      "required": ["primary_font"]
+    },
+
+    "color_palette": {
+      "type": "object",
+      "properties": {
+        "scheme": { "type": "string", "enum": ["monochromatic", "analogous", "complementary", "triadic"] },
+        "primary": { "type": "string", "pattern": "^#([A-Fa-f0-9]{6})$" },
+        "secondary": { "type": "string", "pattern": "^#([A-Fa-f0-9]{6})$" },
+        "accent": { "type": "string", "pattern": "^#([A-Fa-f0-9]{6})$" },
+        "neutral_background": { "type": "string", "pattern": "^#([A-Fa-f0-9]{6})$" },
+        "text_color": { "type": "string", "pattern": "^#([A-Fa-f0-9]{6})$" },
+        "contrast_score": { "type": "string", "enum": ["poor", "acceptable", "good", "excellent"] }
+      },
+      "required": ["primary", "secondary", "neutral_background", "text_color"]
+    },
+
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["navbar", "sidebar", "cards", "carousel", "footer", "chatbot-widget", "signup-form", "grid-gallery", "search-bar", "breadcrumbs", "accordion", "tabs", "progress-bar", "dark-mode-toggle"]
+      }
+    },
+
+    "interactivity": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["scroll-animations", "hover-effects", "parallax", "micro-interactions", "lazy-loading", "infinite-scroll"]
+      }
+    },
+
+    "spacing": {
+      "type": "string",
+      "enum": ["tight", "balanced", "airy"]
+    },
+
+    "polish_level": {
+      "type": "string",
+      "enum": ["basic", "intermediate", "high-end"]
+    },
+
+    "accessibility": {
+      "type": "object",
+      "properties": {
+        "contrast_compliance": { "type": "string", "enum": ["AA", "AAA"] },
+        "alt_text_required": { "type": "boolean" },
+        "keyboard_navigation": { "type": "boolean" },
+        "touch_target_size": { "type": "string", "enum": ["small", "medium", "large"] }
+      },
+      "required": ["contrast_compliance"]
+    },
+
+    "design_system": {
+      "type": "object",
+      "properties": {
+        "atomic_level": { "type": "string", "enum": ["atoms", "molecules", "organisms", "templates", "pages"] },
+        "consistency_score": { "type": "string", "enum": ["low", "medium", "high"] }
+      }
+    },
+
+    "user_experience": {
+      "type": "object",
+      "properties": {
+        "flow_simplicity": { "type": "string", "enum": ["poor", "average", "good", "excellent"] },
+        "navigation_clarity": { "type": "string", "enum": ["confusing", "okay", "clear", "very clear"] },
+        "mobile_responsiveness": { "type": "string", "enum": ["poor", "good", "excellent"] }
+      }
+    },
+
+    "export_options": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["pdf", "figma-json", "html-tailwind", "react-component", "docx"]
+      }
+    },
+
+    "prompt_for_generator": {
+      "type": "string",
+      "description": "Optimized design prompt for Figma AI, Vercel AI, Lovable, etc."
+    }
+  },
+
+  "required": [
+    "project_metadata",
+    "layout",
+    "sections",
+    "hero_style",
+    "typography",
+    "color_palette",
+    "components",
+    "spacing",
+    "polish_level",
+    "accessibility",
+    "design_system",
+    "user_experience",
+    "export_options",
+    "prompt_for_generator"
+  ]
+}

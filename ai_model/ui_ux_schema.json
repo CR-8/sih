@@ -1,0 +1,126 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Design Specification v2.0",
+  "type": "object",
+  "properties": {
+    "project_metadata": {
+      "type": "object",
+      "properties": {
+        "project_name": { "type": "string" },
+        "business_type": { "type": "string", "enum": ["saas", "ecommerce", "portfolio", "blog", "agency", "dashboard", "landing-page", "nonprofit", "educational", "other"] },
+        "target_audience": { "type": "string" },
+        "goals": { "type": "string" }
+      },
+      "required": ["project_name", "business_type"]
+    },
+    "layout": {
+      "type": "string",
+      "enum": ["single-page", "multi-section", "landing-page", "dashboard", "portfolio", "ecommerce"]
+    },
+    "grid_system": {
+      "type": "string",
+      "enum": ["12-column", "16-column", "asymmetrical", "freeform"]
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["hero", "about", "features", "pricing", "testimonials", "faq", "contact", "gallery", "blog", "cta", "services", "team", "roadmap", "metrics", "case-studies"]
+      }
+    },
+    "hero_style": {
+      "type": "string",
+      "enum": ["minimal", "bold-typography", "illustration", "photographic", "video-background", "split-screen", "gradient-overlay"]
+    },
+    "typography": {
+      "type": "object",
+      "properties": {
+        "primary_font": { "type": "string" },
+        "secondary_font": { "type": "string" },
+        "font_scale": { "type": "string", "enum": ["classic (1.2x)", "modern (1.25x)", "fluid-responsive"] },
+        "hierarchy_score": { "type": "string", "enum": ["weak", "moderate", "strong"] },
+        "pairing_style": { "type": "string", "enum": ["serif-sans", "sans-serif", "display-body", "other"] }
+      },
+      "required": ["primary_font"]
+    },
+    "color_palette": {
+      "type": "object",
+      "properties": {
+        "scheme_type": { "type": "string", "enum": ["monochromatic", "analogous", "complementary", "triadic", "custom"] },
+        "primary": { "type": "string", "pattern": "^#([A-Fa-f0-9]{6})$" },
+        "secondary": { "type": "string", "pattern": "^#([A-Fa-f0-9]{6})$" },
+        "accent": { "type": "string", "pattern": "^#([A-Fa-f0-9]{6})$" },
+        "neutral_background": { "type": "string", "pattern": "^#([A-Fa-f0-9]{6})$" },
+        "text_color": { "type": "string", "pattern": "^#([A-Fa-f0-9]{6})$" },
+        "contrast_score": { "type": "string", "enum": ["poor", "acceptable", "good", "excellent"] }
+      },
+      "required": ["primary", "secondary", "neutral_background", "text_color"]
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["navbar", "sidebar", "cards", "carousel", "footer", "chatbot-widget", "signup-form", "grid-gallery", "search-bar", "breadcrumbs", "accordion", "tabs", "progress-bar", "dark-mode-toggle", "modal", "toast", "stepper"]
+      }
+    },
+    "interactivity": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["scroll-animations", "hover-effects", "parallax", "micro-interactions", "lazy-loading", "infinite-scroll", "form-validation", "add-to-cart-animation"]
+      }
+    },
+    "spacing": {
+      "type": "string",
+      "enum": ["tight", "balanced", "airy"]
+    },
+    "polish_level": {
+      "type": "string",
+      "enum": ["basic", "intermediate", "high-end"],
+      "description": "Subjective rating of design refinements (shadows, gradients, details)."
+    },
+    "imagery_style": {
+      "type": "string",
+      "enum": ["stock", "authentic", "illustrated", "iconic", "mixed"]
+    },
+    "design_process_stage": {
+      "type": "string",
+      "enum": ["sketch", "wireframe", "prototype", "final-ui"],
+      "description": "Where this design sits in the product design process."
+    },
+    "accessibility": {
+      "type": "object",
+      "properties": {
+        "contrast_compliance": { "type": "string", "enum": ["AA", "AAA"] },
+        "alt_text_required": { "type": "boolean" },
+        "keyboard_navigation": { "type": "boolean" },
+        "mobile_first": { "type": "boolean" }
+      },
+      "required": ["contrast_compliance"]
+    },
+    "export_options": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["pdf", "figma-json", "html-tailwind", "react-component", "docx"]
+      }
+    },
+    "prompt_for_generator": {
+      "type": "string",
+      "description": "Optimized design prompt for Figma AI, Vercel AI, Lovable, etc."
+    }
+  },
+  "required": [
+    "project_metadata",
+    "layout",
+    "sections",
+    "hero_style",
+    "typography",
+    "color_palette",
+    "components",
+    "spacing",
+    "polish_level",
+    "export_options",
+    "prompt_for_generator"
+  ]
+}
