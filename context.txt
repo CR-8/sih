@@ -1,0 +1,144 @@
+🎯 Project Summary: ML-Based Design Assistant for Web UI
+1. Problem Context
+
+Designers and developers spend significant time selecting color palettes, typography, and layouts during prototyping. Many choices (fonts, colors, mood consistency) are subjective and require iterations. This slows down design lifecycles, especially for early-stage prototyping.
+
+2. Solution Overview
+
+We propose an AI-powered design assistant that:
+
+Asks users simple design preference questions (accent color, theme, mood, style).
+
+Uses Coolors API (for palettes) and Google Fonts API (for fonts).
+
+Passes user input to an ML model trained on existing websites and design datasets.
+
+Predicts optimal color–font pairings.
+
+Returns 3 palette options and 3 font pairings.
+
+Applies user’s choice to ready-made HTML/CSS templates (with CSS variables for colors and Google Fonts integration).
+
+Provides a chatbot powered by Gemini to explain design principles (e.g., “What is the 8:2 rule?”).
+
+Allows export of the final styled template as HTML/CSS.
+
+3. Tech Stack
+
+Frontend: Next.js + TailwindCSS + TypeScript + shadcn/ui (pre-built components).
+
+Backend: Flask (REST API for ML model).
+
+ML Training: Scikit-learn / TensorFlow in Google Colab.
+
+Deployment:
+
+Frontend → Vercel
+
+Backend/ML → AWS EC2 (Flask + Docker)
+
+Chatbot: Google Gemini API.
+
+Version Control: GitHub.
+
+UI Templates: Tailwind + Flowbite/Cruip (free, prebuilt templates).
+
+4. System Architecture
+User (Frontend UI - Next.js) 
+    ↓
+Flask API (on EC2) 
+    ↓
+ML Model (.pkl trained in Colab) 
+    ↓
+Coolors API + Google Fonts API
+    ↓
+Results (JSON: recommended palettes + fonts) 
+    ↓
+Frontend renders → applies CSS variables to pre-built templates
+
+5. Implementation Roadmap (6 Steps)
+Step 1: Setup (0.5 day)
+
+Initialize Next.js + Tailwind + shadcn.
+
+Clone free Tailwind template (e.g., Landing Page/Portfolio).
+
+Setup GitHub → Vercel for auto-deploy.
+
+Spin up AWS EC2 instance with Flask boilerplate.
+
+Step 2: ML Model Training (1 day)
+
+Use datasets:
+
+Google Fonts pairings.
+
+Color palette datasets (Colormind/Kaggle).
+
+Train simple model (Random Forest/Logistic Regression).
+
+Input: {accent_color, theme, mood}
+
+Output: {best_palette, best_font_pair}
+
+Save as .pkl model.
+
+Step 3: API Development (0.5 day)
+
+Flask REST API with endpoint /recommend.
+
+Input: JSON {accent_color, theme, mood}
+
+Output: JSON {palette: [...], fonts: [...]}.
+
+Deployed on EC2 (with Nginx + Docker for stability).
+
+Step 4: Frontend Integration (0.5–1 day)
+
+Form with color picker (react-color), dropdowns for theme/mood.
+
+Fetch Coolors + Google Fonts dynamically.
+
+Display AI-suggested palettes + fonts (preview cards).
+
+Step 5: Template System (0.5–1 day)
+
+Pre-load 2–3 Tailwind templates (Portfolio, Landing Page, Blog).
+
+Replace styles with CSS variables:
+
+:root {
+  --primary: #123456;
+  --secondary: #abcdef;
+  --font-heading: 'Poppins';
+  --font-body: 'Roboto';
+}
+
+
+Apply dynamically based on user’s final choice.
+
+Show live preview + export HTML/CSS as .zip.
+
+Step 6: Chatbot + Final Polish (0.5–1 day)
+
+Integrate Gemini API for Q&A on design principles.
+
+Chat UI → shadcn/chat component.
+
+Add polish (Lottie animations, Toasts, transitions).
+
+Record demo video + write README.
+
+6. Deliverables
+
+Deployed frontend (Vercel) with design assistant UI.
+
+Backend Flask API (EC2) serving ML model.
+
+ML Notebook (Colab) for training process.
+
+Chatbot (Gemini) answering design-related queries.
+
+Exportable templates (HTML/CSS) generated from AI-picked styles.
+
+Presentation-ready demo video + documentation
