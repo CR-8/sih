@@ -10,6 +10,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ComponentTray } from '@/components/component-tray/ComponentTray';
 import { ComponentInfo } from '@/components/component-tray/component-registry';
+import RecommendationCard from '@/components/ui/recommendation-card';
 import { Palette, Eye } from 'lucide-react';
 
 interface Message {
@@ -552,60 +553,28 @@ function Chat({ initialMessage }: ChatProps) {
                                   <CarouselItem key={rec.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
                                     <div
                                       onClick={() => handleRecommendationSelect(rec)}
-                                      className={`cursor-pointer transform transition-all duration-200 hover:scale-105 rounded-lg overflow-hidden ${
+                                      className={`relative cursor-pointer transform transition-all duration-200 hover:scale-105 ${
                                         selectedRecommendationId === rec.id 
                                           ? 'ring-2 ring-blue-400 ring-offset-2 ring-offset-neutral-800' 
                                           : ''
                                       }`}
                                     >
-                                      <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/15 transition-colors">
-                                        <CardContent className="p-4">
-                                          {/* Color palette preview */}
-                                          <div className="flex h-16 rounded-md overflow-hidden mb-3 shadow-lg">
-                                            {rec.colors.map((color, colorIndex) => (
-                                              <div
-                                                key={colorIndex}
-                                                className="flex-1 transition-all duration-300 hover:flex-[2]"
-                                                style={{ backgroundColor: color }}
-                                                title={color}
-                                              />
-                                            ))}
-                                          </div>
-                                          
-                                          {/* Font and name preview */}
-                                          <div className="text-white">
-                                            <h4 
-                                              className="font-semibold text-base mb-2"
-                                              style={{ fontFamily: rec.fonts.primary }}
-                                            >
-                                              {rec.name}
-                                            </h4>
-                                            <p 
-                                              className="text-sm text-white/70 mb-3 line-clamp-2"
-                                              style={{ fontFamily: rec.fonts.secondary }}
-                                            >
-                                              {rec.description}
-                                            </p>
-                                            
-                                            {/* Font info */}
-                                            <div className="text-xs text-white/60 mb-3">
-                                              <div>Heading: {rec.fonts.primary}</div>
-                                              <div>Body: {rec.fonts.secondary}</div>
-                                            </div>
-                                            
-                                            <div className="flex flex-wrap gap-1">
-                                              {rec.tags.slice(0, 3).map((tag, tagIndex) => (
-                                                <span 
-                                                  key={tagIndex}
-                                                  className="text-xs px-2 py-1 bg-white/20 rounded-full"
-                                                >
-                                                  {tag}
-                                                </span>
-                                              ))}
-                                            </div>
-                                          </div>
-                                        </CardContent>
-                                      </Card>
+                                      <RecommendationCard
+                                        colors={rec.colors}
+                                        headingText={rec.name}
+                                        contentText={rec.description}
+                                        fontFamily={rec.fonts.primary}
+                                        className="w-full"
+                                      />
+                                      
+                                      {/* Selection indicator */}
+                                      {selectedRecommendationId === rec.id && (
+                                        <div className="absolute top-2 right-2 bg-blue-500 rounded-full p-1">
+                                          <svg className="h-4 w-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                          </svg>
+                                        </div>
+                                      )}
                                     </div>
                                   </CarouselItem>
                                 ))}

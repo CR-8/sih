@@ -1,0 +1,123 @@
+{
+  "Ada": {
+    "colors": {
+      "primary": { "hex": "#1E3A8A", "rgb": "30,58,138" },
+      "secondary": { "hex": "#EC4899", "rgb": "236,72,153" },
+      "highlight": { "hex": "#22D3EE", "rgb": "34,211,238" },
+      "neutral": {
+        "charcoal": { "hex": "#111827", "rgb": "17,24,39" },
+        "softGray": { "hex": "#9CA3AF", "rgb": "156,163,175" },
+        "white": { "hex": "#FFFFFF", "rgb": "255,255,255" }
+      }
+    },
+    "typography": {
+      "fonts": {
+        "heading": "Clash Display, Satoshi, Arial, sans-serif",
+        "body": "Inter, Arial, sans-serif",
+        "system": "Space Mono, monospace"
+      },
+      "scale": {
+        "h1": { "size": "48px", "weight": 700, "lineHeight": "110%" },
+        "h2": { "size": "36px", "weight": 600, "lineHeight": "110%" },
+        "h3": { "size": "28px", "weight": 600, "lineHeight": "120%" },
+        "h4": { "size": "22px", "weight": 500, "lineHeight": "120%" },
+        "bodyL": { "size": "18px", "weight": 400, "lineHeight": "140%" },
+        "bodyM": { "size": "16px", "weight": 400, "lineHeight": "150%" },
+        "caption": { "size": "14px", "weight": 400, "lineHeight": "150%" },
+        "overline": { "size": "12px", "weight": 500, "lineHeight": "140%", "transform": "uppercase", "letterSpacing": "0.05em" }
+      }
+    },
+    "spacing": {
+      "baseUnit": 8,
+      "scale": {
+        "xs": 4,
+        "s": 8,
+        "m": 16,
+        "l": 24,
+        "xl": 32,
+        "xxl": 48
+      }
+    },
+    "grid": {
+      "desktop": { "columns": 12, "margin": 72, "gutter": 24 },
+      "tablet": { "columns": 8, "margin": 32, "gutter": 20 },
+      "mobile": { "columns": 4, "margin": 16, "gutter": 16 }
+    },
+    "components": {
+      "button": {
+        "shape": "pill",
+        "primary": {
+          "bg": "{colors.primary.hex}",
+          "text": "{colors.neutral.white}",
+          "hover": { "outline": "{colors.highlight.hex}" }
+        },
+        "secondary": {
+          "border": "{colors.secondary.hex}",
+          "bg": "transparent",
+          "hover": { "bg": "rgba(236,72,153,0.1)" }
+        },
+        "disabled": {
+          "bg": "{colors.neutral.softGray.hex}",
+          "text": "#6B7280"
+        }
+      },
+      "input": {
+        "shape": "rounded-12px",
+        "padding": "{spacing.scale.m}",
+        "focusBorder": "{colors.highlight.hex}",
+        "errorBorder": "{colors.secondary.hex}"
+      },
+      "chatWindow": {
+        "container": {
+          "widthDesktop": "70%",
+          "widthMobile": "100%",
+          "background": "rgba(255,255,255,0.7)",
+          "blur": "12px",
+          "borderRadius": "20px"
+        },
+        "messages": {
+          "user": { "bg": "{colors.neutral.white}", "align": "right" },
+          "ai": {
+            "bgGradient": ["{colors.primary.hex}", "{colors.secondary.hex}"],
+            "align": "left",
+            "text": "{colors.neutral.white}"
+          }
+        },
+        "avatar": {
+          "type": "morphingOrb",
+          "states": {
+            "thinking": "{colors.secondary.hex}",
+            "responding": "{colors.highlight.hex}",
+            "idle": "{colors.primary.hex}"
+          }
+        }
+      },
+      "card": {
+        "borderRadius": 16,
+        "shadow": "0 4px 16px rgba(0,0,0,0.08)",
+        "hover": {
+          "scale": 1.02,
+          "borderGlow": "{colors.highlight.hex}"
+        }
+      },
+      "icon": {
+        "stroke": "2px",
+        "hover": {
+          "scale": 1.05,
+          "tint": "{colors.highlight.hex}"
+        }
+      }
+    },
+    "interactionPatterns": {
+      "moodboardPreview": "Chat suggestions trigger morphing background preview",
+      "swipeCompare": "Split-screen slider compares two design outputs",
+      "conversationalPreview": "Inline swatch bubbles and font previews in chat flow"
+    },
+    "rules": {
+      "consistency": "Use defined colors, typography, spacing across all modules",
+      "accessibility": "Maintain WCAG AA minimum contrast",
+      "motion": { "duration": "150-250ms", "easing": "ease-out" },
+      "tone": "Encouraging, concise, direct"
+    }
+  }
+}
